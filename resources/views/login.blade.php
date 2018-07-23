@@ -2,7 +2,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width">
-    <title>吉富德地产 -- 登录</title>
+    <title>仁才地产 -- 登录</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link rel="shortcut icon" href="javascript:void(0)"/>
@@ -18,11 +18,11 @@
 </div>
 
 <div class="nav">
-    <span>吉富德地产</span> &gt; <span>登录</span>
+    <span>仁才地产</span> &gt; <span>登录</span>
 </div>
 <div class="main zmm" id="app">
     <form action="" class="login" id="loginForm">
-        <img src="{{ asset('login/img/logo.png') }}" alt="吉富德地产">
+        <img src="{{ asset('login/img/logo.png') }}" alt="仁才地产">
         <div class="inputele">
             <li>
                 <input type="text" name="username" v-model="username" placeholder="请输入手机号码">
@@ -36,7 +36,7 @@
 
     <div class="cor">
         <p>
-            吉富德地产 -- 登陆
+            仁才地产 -- 登陆
         </p>
         <div>
             {{--<span class="qq">QQ登录</span>--}}
