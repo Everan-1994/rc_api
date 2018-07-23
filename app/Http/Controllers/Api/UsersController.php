@@ -41,7 +41,7 @@ class UsersController extends Controller
 
     public function store(UserRequest $userRequest)
     {
-        $password = $userRequest->password ?: 'jfd168';
+        $password = $userRequest->password ?: 'rencai168';
 
         $user = $this->user->create([
             'name'     => $userRequest->name,

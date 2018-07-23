@@ -14,7 +14,17 @@ class AddReferences extends Migration
         });
 
         Schema::table('messages', function (Blueprint $table) {
-            // 当 article_id 对应的 users 表数据被删除时，删除此条数据
+            // 当 article_id 对应的 article 表数据被删除时，删除此条数据
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+        });
+
+        Schema::table('tags', function (Blueprint $table) {
+            // 当 article_id 对应的 article 表数据被删除时，删除此条数据
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+        });
+
+        Schema::table('house_types', function (Blueprint $table) {
+            // 当 article_id 对应的 article 表数据被删除时，删除此条数据
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
         });
     }

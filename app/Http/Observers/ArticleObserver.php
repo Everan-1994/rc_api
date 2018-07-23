@@ -18,8 +18,8 @@ class ArticleObserver
         $article->down_body = clean($article->down_body, 'user_articles_body');
     }
 
-    public function deleted(Article $article)
-    {
-        \DB::table('messages')->where('article_id', $article->id)->delete();
-    }
+//    public function deleted(Article $article)
+//    {
+//        \DB::table('messages')->where('article_id', $article->id)->delete();
+//    }
 }

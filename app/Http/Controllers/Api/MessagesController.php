@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Article;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Http\Resources\MessageResource;
@@ -35,6 +36,10 @@ class MessagesController extends Controller
 
     public function store(Request $request)
     {
+        if ($this->getArticleStatus($request->article_id)) {
+            return response(['msg' => '文章已失效', 'type' => 0], 500);
+        }
+
         $ip = $request->getClientIp();
 
         $exists = $this->message->where([
@@ -46,8 +51,9 @@ class MessagesController extends Controller
 
         if ($exists) {
             return response([
-                'msg' => '该项目已存在留言'
-            ], 400);
+                'msg'  => '该项目已存在留言',
+                'type' => 1
+            ], 500);
         }
 
         $this->message->create([
@@ -103,7 +109,7 @@ class MessagesController extends Controller
             'msg'  => '删除成功'
         ]);
     }
-    
+
     /**
      * 最近七天内的留言
      */
@@ -186,5 +192,19 @@ class MessagesController extends Controller
         }
 
         return response($date);
+    }
+
+    /**
+     * 文章状态
+     */
+    public function getArticleStatus($article_id)
+    {
+        $article_status = Article::whereId($article_id)->value('status');
+
+        if ($article_status == 2) {
+            return true;
+        }
+
+        return false;
     }
 }

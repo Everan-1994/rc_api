@@ -14,12 +14,12 @@ class UsersTableSeeder extends Seeder
     {
         // 创建超级管理员
         User::insert([
-            'name'       => '吉富德地产',
-            'email'      => 'jifude@qq.com',
-            'phone'      => '18376662410',
+            'name'       => '仁才地产',
+            'email'      => 'rencai@qq.com',
+            'phone'      => '18587993042',
             'remake'     => '超级管理员',
             'identify'   => 1,
-            'password'   => bcrypt('jfd168'),
+            'password'   => bcrypt('rencai168'),
             'created_at' => now()->toDateTimeString(),
             'updated_at' => now()->toDateTimeString()
         ]);
