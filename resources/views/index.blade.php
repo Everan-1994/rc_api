@@ -2,7 +2,7 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="utf-8">
-    <title>吉富德地产</title>
+    <title>仁才地产</title>
     <meta name="viewport"
           content="initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width">
     <link rel="stylesheet" type="text/css" href="{{ asset('home/css/common.css') }}">
