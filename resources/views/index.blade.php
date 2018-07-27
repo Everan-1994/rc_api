@@ -302,7 +302,7 @@
                 $('#qrcode').qrcode({
                     width: 170,
                     height: 170,
-                    text: `https://jfd.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}`
+                    text: `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}`
                 });
                 layer.open({
                     type: 1,
