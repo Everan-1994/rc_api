@@ -300,7 +300,8 @@
                 let phone = getUserPhone();
                 let names = getUser();
                 let share_name = `${names.substring(0, 1)}经理`;
-                console.log(share_name);
+                console.log('names：', names);
+                console.log('share_name：', share_name);
                 $('#qrcode').qrcode({
                     width: 170,
                     height: 170,
