@@ -295,16 +295,14 @@
                 }
             },
             shareQrcode(id) {
-                console.log(id);
                 this.qrcodes = true;
                 let share_id = getUserId();
                 let phone = getUserPhone();
-                let name = getUser();
-                console.log(name);
+                let names = getUser();
                 $('#qrcode').qrcode({
                     width: 170,
                     height: 170,
-                    text: `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${name.substring(0, 1)}经理`
+                    text: `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${names.substring(0, 1)}经理`
                 });
                 layer.open({
                     type: 1,
