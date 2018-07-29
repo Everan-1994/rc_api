@@ -299,10 +299,12 @@
                 let share_id = getUserId();
                 let phone = getUserPhone();
                 let names = getUser();
+                let share_name = `${names.substring(0, 1)}经理`;
+                console.log(share_name);
                 $('#qrcode').qrcode({
                     width: 170,
                     height: 170,
-                    text: `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${names.substring(0, 1)}经理`
+                    text: `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}`
                 });
                 layer.open({
                     type: 1,
