@@ -300,6 +300,7 @@
                 let share_id = getUserId();
                 let phone = getUserPhone();
                 let name = getUser();
+                console.log(name);
                 $('#qrcode').qrcode({
                     width: 170,
                     height: 170,
