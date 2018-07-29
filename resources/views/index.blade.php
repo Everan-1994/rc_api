@@ -61,7 +61,7 @@
                     <!--top-->
                     <div class="novice_zs_f_in_l_top" style="margin-bottom: 10px;">
                         <img src="home/title.png"/>
-                        <span class="titles" v-text="article.title"></span>
+                        <span class="titles" v-text="article.title" @click="read(article.id)"></span>
                     </div>
                     <!--bottom-->
                     <div class="novice_zs_f_in_l_bottom">
@@ -112,13 +112,16 @@
                             </li>
                             <li class="mark2_f">
                                 <em>联系方式</em>
-                                <p style="text-align: center;" v-text="message.phone"></p>
+                                <p style="text-align: center;" >
+                                    <a :href="message.tphone" v-text="message.phone"></a>
+                                </p>
                             </li>
                             <li class="mark3_f">
-                                <em>备注</em>
-                                <p class="titles" style="text-align: center;" v-if="message.remake"
-                                   v-text="message.remake"></p>
-                                <p style="text-align: center;" v-else> -- </p>
+                                <em>留言</em>
+                                <p class="titles" style="text-align: center;" v-text="message.home_type"></p>
+                                {{--<p class="titles" style="text-align: center;" v-if="message.remake"--}}
+                                   {{--v-text="message.remake"></p>--}}
+                                {{--<p style="text-align: center;" v-else> -- </p>--}}
                             </li>
                             <li class="mark3_f" style="color: #009f95;">
                                 <em v-text="message.ltime"></em>
@@ -130,7 +133,7 @@
                     </div>
                 </div>
                 <!--right-->
-                <a href="javascript:;" v-if="message.status == 1">
+                <a href="javascript:;" v-if="message.status == 1" @click="remaked(message.remake)">
                     <div class="novice_zs_f_in_r">
                         <span style="margin-top: 66%;color: #fff;">已回访</span>
                     </div>
@@ -239,6 +242,7 @@
                     _this.messageList.forEach((v, i) => {
                         _this.messageList[i].ltime = moment(v.created_at, format = 'YYYYMMDD H:mm:ss').fromNow();
                         _this.messageList[i].htime = moment(v.updated_at, format = 'YYYYMMDD H:mm:ss').fromNow();
+                        _this.messageList[i].tphone = `tel:${v.phone}`;
                     });
                 }).catch(error => {
                     if (error.response.status == 401) {
@@ -324,6 +328,23 @@
                 });
                 this.qrcodes = false;
             },
+            read(id) {
+                let share_id = getUserId();
+                let phone = getUserPhone();
+                let names = getUser();
+                let share_name = `${names.substring(0, 1)}经理`;
+
+                let detail = layer.open({
+                    type: 2,
+                    title: '文章详情',
+                    shadeClose: true,
+                    shade: 0.8,
+                    area: ['100%', '100%'],
+                    content: `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}` //iframe的url
+                });
+
+                layer.full(detail);
+            },
             remake(id) {
                 let _this = this;
                 layer.prompt({title: '随便写点备注，并确认', formType: 2}, function (text, index) {
@@ -339,6 +360,9 @@
                         layer.msg('备注失败', {icon: 5});
                     })
                 });
+            },
+            remaked(remake) {
+                layer.msg(remake);
             },
             utf16to8(str) {
                 var out, i, len, c;
