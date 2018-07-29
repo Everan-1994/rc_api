@@ -116,24 +116,24 @@
                                     <a :href="message.tphone" v-text="message.phone"></a>
                                 </p>
                             </li>
-                            <li class="mark3_f">
-                                <em>留言</em>
+                            <li class="mark3_f" style="width: 50% !important;">
+                                <em @click="dmessage(message.home_type)" v-text="message.ltime"></em>
                                 <p class="titles" style="text-align: center;" v-text="message.home_type"></p>
                                 {{--<p class="titles" style="text-align: center;" v-if="message.remake"--}}
                                    {{--v-text="message.remake"></p>--}}
                                 {{--<p style="text-align: center;" v-else> -- </p>--}}
                             </li>
-                            <li class="mark3_f" style="color: #009f95;">
-                                <em v-text="message.ltime"></em>
-                                <p class="titles" style="text-align: center;" v-text="message.htime"
-                                   v-if="message.status == 1"></p>
-                                <p class="titles" style="text-align: center;" v-else> -- </p>
-                            </li>
+                            {{--<li class="mark3_f" style="color: #009f95;">--}}
+                                {{--<em v-text="message.ltime"></em>--}}
+                                {{--<p class="titles" style="text-align: center;" v-text="message.htime"--}}
+                                   {{--v-if="message.status == 1"></p>--}}
+                                {{--<p class="titles" style="text-align: center;" v-else> -- </p>--}}
+                            {{--</li>--}}
                         </ul>
                     </div>
                 </div>
                 <!--right-->
-                <a href="javascript:;" v-if="message.status == 1" @click="remaked(message.remake)">
+                <a href="javascript:;" v-if="message.status == 1" @click="remaked(message.remake, message.htime)">
                     <div class="novice_zs_f_in_r">
                         <span style="margin-top: 66%;color: #fff;">已回访</span>
                     </div>
@@ -240,7 +240,7 @@
                         _this.showMPage = true;
                     }
                     _this.messageList.forEach((v, i) => {
-                        _this.messageList[i].ltime = moment(v.created_at, format = 'YYYYMMDD H:mm:ss').fromNow();
+                        _this.messageList[i].ltime = moment(v.created_at, format = 'YYYYMMDD H:mm:ss').fromNow() + '的留言';
                         _this.messageList[i].htime = moment(v.updated_at, format = 'YYYYMMDD H:mm:ss').fromNow();
                         _this.messageList[i].tphone = `tel:${v.phone}`;
                     });
@@ -345,6 +345,9 @@
 
                 layer.full(detail);
             },
+            dmessage(msg) {
+                layer.alert(msg, {'title': '客户留言'});
+            },
             remake(id) {
                 let _this = this;
                 layer.prompt({title: '随便写点备注，并确认', formType: 2}, function (text, index) {
@@ -361,8 +364,8 @@
                     })
                 });
             },
-            remaked(remake) {
-                layer.msg(remake);
+            remaked(remake, htime) {
+                layer.msg(`${htime}回复：${remake}`);
             },
             utf16to8(str) {
                 var out, i, len, c;
