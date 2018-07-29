@@ -31,6 +31,7 @@
         background-color: #3db1fa;
         color: #fff;
     }
+
     .li33 {
         width: 33% !important;
     }
@@ -53,7 +54,8 @@
         <div id="qrcode" v-show="qrcodes" style="text-align: center; padding: 10px;"></div>
         <div class="fourcp_1">
             <!--一条开始-->
-            <div class="novice_zs_f_in" v-for="(article, index) in articleList" :key="index" style="margin-bottom: 6px;">
+            <div class="novice_zs_f_in" v-for="(article, index) in articleList" :key="index"
+                 style="margin-bottom: 6px;">
                 <!--left-->
                 <div class="novice_zs_f_in_l">
                     <!--top-->
@@ -92,7 +94,8 @@
         <!--客户留言-->
         <div class="fourcp_1">
             <!--一条开始-->
-            <div class="novice_zs_f_in" v-for="(message, index) in messageList" :key="index" style="margin-bottom: 6px;">
+            <div class="novice_zs_f_in" v-for="(message, index) in messageList" :key="index"
+                 style="margin-bottom: 6px;">
                 <!--left-->
                 <div class="novice_zs_f_in_l">
                     <!--top-->
@@ -113,12 +116,14 @@
                             </li>
                             <li class="mark3_f">
                                 <em>备注</em>
-                                <p class="titles" style="text-align: center;" v-if="message.remake" v-text="message.remake"></p>
+                                <p class="titles" style="text-align: center;" v-if="message.remake"
+                                   v-text="message.remake"></p>
                                 <p style="text-align: center;" v-else> -- </p>
                             </li>
                             <li class="mark3_f" style="color: #009f95;">
                                 <em v-text="message.ltime"></em>
-                                <p class="titles" style="text-align: center;" v-text="message.htime" v-if="message.status == 1" ></p>
+                                <p class="titles" style="text-align: center;" v-text="message.htime"
+                                   v-if="message.status == 1"></p>
                                 <p class="titles" style="text-align: center;" v-else> -- </p>
                             </li>
                         </ul>
@@ -130,7 +135,7 @@
                         <span style="margin-top: 66%;color: #fff;">已回访</span>
                     </div>
                 </a>
-                <a href="javascript:;" @click="remake(message.id)"  v-else>
+                <a href="javascript:;" @click="remake(message.id)" v-else>
                     <div class="novice_zs_f_in_r" style="background: red !important;">
                         <span style="margin-top: 66%;color: #fff;">待回访</span>
                     </div>
@@ -196,7 +201,7 @@
                         _this.showPage = true;
                     }
                     _this.articleList.forEach((v, i) => {
-                        _this.articleList[i].time = moment(v.created_at, format='YYYYMMDD H:mm:ss').fromNow();
+                        _this.articleList[i].time = moment(v.created_at, format = 'YYYYMMDD H:mm:ss').fromNow();
                     });
                 }).catch(error => {
                     if (error.response.status == 401) {
@@ -205,7 +210,7 @@
                             title: '温馨提示',
                             closeBtn: 0,
                             btn: ['朕知道了']
-                        }, function(){
+                        }, function () {
                             removeToken();
                             removeUser();
                             removeUserId();
@@ -232,8 +237,8 @@
                         _this.showMPage = true;
                     }
                     _this.messageList.forEach((v, i) => {
-                        _this.messageList[i].ltime = moment(v.created_at, format='YYYYMMDD H:mm:ss').fromNow();
-                        _this.messageList[i].htime = moment(v.updated_at, format='YYYYMMDD H:mm:ss').fromNow();
+                        _this.messageList[i].ltime = moment(v.created_at, format = 'YYYYMMDD H:mm:ss').fromNow();
+                        _this.messageList[i].htime = moment(v.updated_at, format = 'YYYYMMDD H:mm:ss').fromNow();
                     });
                 }).catch(error => {
                     if (error.response.status == 401) {
@@ -242,7 +247,7 @@
                             title: '温馨提示',
                             closeBtn: 0,
                             btn: ['朕知道了']
-                        }, function(){
+                        }, function () {
                             removeToken();
                             removeUser();
                             removeUserId();
@@ -295,13 +300,14 @@
                 }
             },
             shareQrcode(id) {
-                this.qrcodes = true;
+                const _this = this;
+                _this.qrcodes = true;
                 let share_id = getUserId();
                 let phone = getUserPhone();
                 let names = getUser();
                 let share_name = `${names.substring(0, 1)}经理`;
-                let urls = `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}`;
-                
+                let urls = _this.utf16to8(`https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}`);
+
                 $('#qrcode').qrcode({
                     width: 170,
                     height: 170,
@@ -320,7 +326,7 @@
             },
             remake(id) {
                 let _this = this;
-                layer.prompt({title: '随便写点备注，并确认', formType: 2}, function(text, index){
+                layer.prompt({title: '随便写点备注，并确认', formType: 2}, function (text, index) {
                     layer.close(index);
                     axios.patch('api/message/remake', {
                         id: id,
@@ -330,9 +336,28 @@
                         _this.getMessageList();
                         layer.msg('备注成功', {icon: 6});
                     }).catch(error => {
-                         layer.msg('备注失败', {icon: 5});
+                        layer.msg('备注失败', {icon: 5});
                     })
                 });
+            },
+            utf16to8(str) {
+                var out, i, len, c;
+                out = "";
+                len = str.length;
+                for (i = 0; i < len; i++) {
+                    c = str.charCodeAt(i);
+                    if ((c >= 0x0001) && (c <= 0x007F)) {
+                        out += str.charAt(i);
+                    } else if (c > 0x07FF) {
+                        out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+                        out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+                        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                    } else {
+                        out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+                        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+                    }
+                }
+                return out;
             }
         }
     });
