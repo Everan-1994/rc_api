@@ -300,12 +300,14 @@
                 let phone = getUserPhone();
                 let names = getUser();
                 let share_name = `${names.substring(0, 1)}经理`;
+                let urls = `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}`;
                 console.log('names：', names);
                 console.log('share_name：', share_name);
+                console.log('urls：', urls);
                 $('#qrcode').qrcode({
                     width: 170,
                     height: 170,
-                    text: `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}`
+                    text: urls
                 });
                 layer.open({
                     type: 1,
