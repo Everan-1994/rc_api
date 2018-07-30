@@ -35,6 +35,20 @@
     .li33 {
         width: 33% !important;
     }
+
+    .edit-pwd {
+        max-width: 45px;
+        position: fixed;
+        bottom: 75px;
+        right: 2%;
+    }
+
+    .need-logout {
+        max-width: 45px;
+        position: fixed;
+        bottom: 30px;
+        right: 2%;
+    }
 </style>
 
 <body>
@@ -149,6 +163,11 @@
                 <button class="btn-page" @click="more_mnext" ref="more_mnext">下一页</button>
             </div>
         </div>
+        {{--修改密码 & 退出登陆--}}
+    </div>
+    <div>
+        <image src="home/logout.png" class="need-logout" @click="need_logout" alt="退出系统"/>
+        <image src="home/edit_pwd.png" class="edit-pwd" @click="edit_pwd" alt="修改密码"/>
     </div>
 </div>
 <script src="{{ asset('layer/jquery.js') }}"></script>
@@ -366,6 +385,50 @@
             },
             remaked(remake, htime) {
                 layer.msg(`${htime}回复：${remake}`);
+            },
+            edit_pwd() {
+                const  _this = this;
+                layer.prompt({title: '请输入新密码', formType: 0}, function(pass, index){
+                    layer.close(index);
+                    _this.edit_pwd_do(pass);
+                });
+            },
+            edit_pwd_do(pass) {
+                const _this = this;
+                let user_id = getUserId();
+                axios.patch(`api/user/${user_id}/changePwd`, {new_pwd: pass}).then(response => {
+                    layer.msg('密码修改成功', {icon: 6, time: 1000});
+                    setTimeout(function () {
+                        removeToken();
+                        window.location.href = "{{ url('wap') }}";
+                    }, 1500);
+                }).catch(error => {
+                    layer.msg('系统出错，请稍后再试。', {icon: 5});
+                });
+            },
+            need_logout() {
+                const _this = this;
+                layer.confirm('确定退出系统吗？', {
+                    title: '温馨提示',
+                    btn: ['确定','取消']
+                }, function(){
+                    _this.logout();
+                });
+            },
+            logout() {
+                axios.delete('api/logout').then(response => {
+                    removeToken();
+                    layer.msg('退出成功', {icon: 6});
+                    setTimeout(function () {
+                        window.location.href = "{{ url('wap') }}";
+                    }, 1000);
+                }).catch(error => {
+                    removeToken();
+                    layer.msg('退出成功', {icon: 6});
+                    setTimeout(function () {
+                        window.location.href = "{{ url('wap') }}";
+                    }, 1000);
+                });
             },
             utf16to8(str) {
                 var out, i, len, c;

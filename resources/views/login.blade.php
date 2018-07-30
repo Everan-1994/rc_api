@@ -75,7 +75,10 @@
                             setUser(data.data.name);
                             setUserId(data.data.id);
                             setUserPhone(_this.username);
-                            window.location.href = "{{ url('index') }}";
+                            layer.msg('登陆成功', {icon: 6, time: 1000});
+                            setTimeout(() => {
+                                window.location.href = "{{ url('index') }}";
+                            }, 1000);
                         } else {
                             layer.alert('非授权用户！', {icon: 0, title: '温馨提示'})
                         }
