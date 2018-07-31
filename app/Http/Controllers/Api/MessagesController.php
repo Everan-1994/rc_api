@@ -156,8 +156,9 @@ class MessagesController extends Controller
 
         if ($list) {
             // 构造12个月 YYYY-MM
+            $now = substr(now()->toDateString(), 0, 7) . '-01';
             for ($i = 0; $i <= 11; $i++) {
-                $month = now()->modify('-' . $i . ' months')->toDateString();
+                $month = Carbon::parse($now)->modify('-' . $i . ' months')->toDateString();
                 $ms[$i] = substr($month, 0, 7); // YYYY-MM
             }
 
