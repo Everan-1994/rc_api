@@ -52,122 +52,125 @@
 </style>
 
 <body>
-<div class="xfdsctz_f">
-    <ul>
-        <li class="addys_f2">文章列表</li>
-        <li>客户留言</li>
-    </ul>
-</div>
-<!--占固定定位的块-->
-<div class="occupy_f"></div>
-<!--显示区域-->
-<div class="display_f" id="app">
-    <!--包的内容-->
-    <div class="display_f_in">
-        <!--文章列表-->
-        <div id="qrcode" v-show="qrcodes" style="text-align: center; padding: 10px;"></div>
-        <div class="fourcp_1">
-            <!--一条开始-->
-            <div class="novice_zs_f_in" v-for="(article, index) in articleList" :key="index"
-                 style="margin-bottom: 6px;">
-                <!--left-->
-                <div class="novice_zs_f_in_l">
-                    <!--top-->
-                    <div class="novice_zs_f_in_l_top" style="margin-bottom: 10px;">
-                        <img src="home/title.png"/>
-                        <span class="titles" v-text="article.title" @click="read(article.id)"></span>
-                    </div>
-                    <!--bottom-->
-                    <div class="novice_zs_f_in_l_bottom">
-                        <ul>
-                            <li class="mark1_f"
-                                style="width: 70% !important; margin-left: 10px; border-top: 1px dashed #EEEEEE;">
-                                <div style="font-size: 12px; padding: 10px 10px 0 10px;" v-html="article.title"></div>
-                            </li>
-                            <li class="mark3_f"
-                                style="width: 20% !important; font-size: 12px; padding: 7% 0 0 10px; border-top: 1px dashed #EEEEEE; ">
-                                <div>
-                                    <span v-text="article.time"></span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!--right-->
-                <a href="javascript:;" @click="shareQrcode(article.id)">
-                    <div class="novice_zs_f_in_r">
-                        <span style="margin-top: 85%;color: #fff;">分享</span>
-                    </div>
-                </a>
-            </div>
-            <div style="width: 100%; text-align: center;" v-show="showPage">
-                <button class="btn-page" @click="more_prev" ref="more_prev">上一页</button>
-                <button class="btn-page" @click="more_next" ref="more_next">下一页</button>
-            </div>
-        </div>
-        <!--客户留言-->
-        <div class="fourcp_1">
-            <!--一条开始-->
-            <div class="novice_zs_f_in" v-for="(message, index) in messageList" :key="index"
-                 style="margin-bottom: 6px;">
-                <!--left-->
-                <div class="novice_zs_f_in_l">
-                    <!--top-->
-                    <div class="novice_zs_f_in_l_top" style="margin-bottom: 10px;">
-                        <img src="home/title.png"/>
-                        <span class="titles"><i v-text="message.title"></i></span>
-                    </div>
-                    <!--bottom-->
-                    <div class="novice_zs_f_in_l_bottom">
-                        <ul>
-                            <li class="mark1_f">
-                                <em>姓名</em>
-                                <p style="text-align: center;" v-text="message.name"></p>
-                            </li>
-                            <li class="mark2_f">
-                                <em>联系方式</em>
-                                <p style="text-align: center;" >
-                                    <a :href="message.tphone" v-text="message.phone"></a>
-                                </p>
-                            </li>
-                            <li class="mark3_f" style="width: 50% !important;">
-                                <em @click="dmessage(message.home_type)" v-text="message.ltime"></em>
-                                <p class="titles" style="text-align: center;" v-text="message.home_type"></p>
-                                {{--<p class="titles" style="text-align: center;" v-if="message.remake"--}}
-                                   {{--v-text="message.remake"></p>--}}
-                                {{--<p style="text-align: center;" v-else> -- </p>--}}
-                            </li>
-                            {{--<li class="mark3_f" style="color: #009f95;">--}}
-                                {{--<em v-text="message.ltime"></em>--}}
-                                {{--<p class="titles" style="text-align: center;" v-text="message.htime"--}}
-                                   {{--v-if="message.status == 1"></p>--}}
-                                {{--<p class="titles" style="text-align: center;" v-else> -- </p>--}}
-                            {{--</li>--}}
-                        </ul>
-                    </div>
-                </div>
-                <!--right-->
-                <a href="javascript:;" v-if="message.status == 1" @click="remaked(message.remake, message.htime)">
-                    <div class="novice_zs_f_in_r">
-                        <span style="margin-top: 66%;color: #fff;">已回访</span>
-                    </div>
-                </a>
-                <a href="javascript:;" @click="remake(message.id)" v-else>
-                    <div class="novice_zs_f_in_r" style="background: red !important;">
-                        <span style="margin-top: 66%;color: #fff;">待回访</span>
-                    </div>
-                </a>
-            </div>
-            <div style="width: 100%; text-align: center;" v-show="showMPage">
-                <button class="btn-page" @click="more_mprev" ref="more_mprev">上一页</button>
-                <button class="btn-page" @click="more_mnext" ref="more_mnext">下一页</button>
-            </div>
-        </div>
-        {{--修改密码 & 退出登陆--}}
+<div id="app">
+    <div class="xfdsctz_f">
+        <ul>
+            <li class="addys_f2" @click="getList">文章列表</li>
+            <li @click="getMsg">客户留言</li>
+        </ul>
     </div>
-    <div>
-        <image src="home/logout.png" class="need-logout" @click="need_logout" alt="退出系统"/>
-        <image src="home/edit_pwd.png" class="edit-pwd" @click="edit_pwd" alt="修改密码"/>
+    <!--占固定定位的块-->
+    <div class="occupy_f"></div>
+
+    <!--显示区域-->
+    <div class="display_f">
+        <!--包的内容-->
+        <div class="display_f_in">
+            <!--文章列表-->
+            <div id="qrcode" v-show="qrcodes" style="text-align: center; padding: 10px;"></div>
+            <div class="fourcp_1">
+                <!--一条开始-->
+                <div class="novice_zs_f_in" v-for="(article, index) in articleList" :key="index"
+                     style="margin-bottom: 6px;">
+                    <!--left-->
+                    <div class="novice_zs_f_in_l">
+                        <!--top-->
+                        <div class="novice_zs_f_in_l_top" style="margin-bottom: 10px;">
+                            <img src="home/title.png"/>
+                            <span class="titles" v-text="article.title" @click="read(article.id)"></span>
+                        </div>
+                        <!--bottom-->
+                        <div class="novice_zs_f_in_l_bottom">
+                            <ul>
+                                <li class="mark1_f"
+                                    style="width: 70% !important; margin-left: 10px; border-top: 1px dashed #EEEEEE;">
+                                    <div style="font-size: 12px; padding: 10px 10px 0 10px;" v-html="article.title"></div>
+                                </li>
+                                <li class="mark3_f"
+                                    style="width: 20% !important; font-size: 12px; padding: 7% 0 0 10px; border-top: 1px dashed #EEEEEE; ">
+                                    <div>
+                                        <span v-text="article.time"></span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--right-->
+                    <a href="javascript:;" @click="shareQrcode(article.id)">
+                        <div class="novice_zs_f_in_r">
+                            <span style="margin-top: 85%;color: #fff;">分享</span>
+                        </div>
+                    </a>
+                </div>
+                <div style="width: 100%; text-align: center;" v-show="showPage">
+                    <button class="btn-page" @click="more_prev" ref="more_prev">上一页</button>
+                    <button class="btn-page" @click="more_next" ref="more_next">下一页</button>
+                </div>
+            </div>
+            <!--客户留言-->
+            <div class="fourcp_1">
+                <!--一条开始-->
+                <div class="novice_zs_f_in" v-for="(message, index) in messageList" :key="index"
+                     style="margin-bottom: 6px;">
+                    <!--left-->
+                    <div class="novice_zs_f_in_l">
+                        <!--top-->
+                        <div class="novice_zs_f_in_l_top" style="margin-bottom: 10px;">
+                            <img src="home/title.png"/>
+                            <span class="titles"><i v-text="message.title"></i></span>
+                        </div>
+                        <!--bottom-->
+                        <div class="novice_zs_f_in_l_bottom">
+                            <ul>
+                                <li class="mark1_f">
+                                    <em>姓名</em>
+                                    <p style="text-align: center;" v-text="message.name"></p>
+                                </li>
+                                <li class="mark2_f">
+                                    <em>联系方式</em>
+                                    <p style="text-align: center;" >
+                                        <a :href="message.tphone" v-text="message.phone"></a>
+                                    </p>
+                                </li>
+                                <li class="mark3_f" style="width: 50% !important;">
+                                    <em @click="dmessage(message.home_type)" v-text="message.ltime"></em>
+                                    <p class="titles" style="text-align: center;" v-text="message.home_type"></p>
+                                    {{--<p class="titles" style="text-align: center;" v-if="message.remake"--}}
+                                       {{--v-text="message.remake"></p>--}}
+                                    {{--<p style="text-align: center;" v-else> -- </p>--}}
+                                </li>
+                                {{--<li class="mark3_f" style="color: #009f95;">--}}
+                                    {{--<em v-text="message.ltime"></em>--}}
+                                    {{--<p class="titles" style="text-align: center;" v-text="message.htime"--}}
+                                       {{--v-if="message.status == 1"></p>--}}
+                                    {{--<p class="titles" style="text-align: center;" v-else> -- </p>--}}
+                                {{--</li>--}}
+                            </ul>
+                        </div>
+                    </div>
+                    <!--right-->
+                    <a href="javascript:;" v-if="message.status == 1" @click="remaked(message.remake, message.htime)">
+                        <div class="novice_zs_f_in_r">
+                            <span style="margin-top: 66%;color: #fff;">已回访</span>
+                        </div>
+                    </a>
+                    <a href="javascript:;" @click="remake(message.id)" v-else>
+                        <div class="novice_zs_f_in_r" style="background: red !important;">
+                            <span style="margin-top: 66%;color: #fff;">待回访</span>
+                        </div>
+                    </a>
+                </div>
+                <div style="width: 100%; text-align: center;" v-show="showMPage">
+                    <button class="btn-page" @click="more_mprev" ref="more_mprev">上一页</button>
+                    <button class="btn-page" @click="more_mnext" ref="more_mnext">下一页</button>
+                </div>
+            </div>
+            {{--修改密码 & 退出登陆--}}
+        </div>
+        <div>
+            <image src="home/logout.png" class="need-logout" @click="need_logout" alt="退出系统"/>
+            <image src="home/edit_pwd.png" class="edit-pwd" @click="edit_pwd" alt="修改密码"/>
+        </div>
     </div>
 </div>
 <script src="{{ asset('layer/jquery.js') }}"></script>
@@ -189,25 +192,28 @@
                 total: 0,
                 page: 1,
                 pageSize: 5,
-                showPage: true,
+                showPage: false,
                 articleList: [],
                 m_total: 0,
                 m_page: 1,
                 m_pageSize: 5,
-                showMPage: true,
+                showMPage: false,
                 messageList: []
             }
         },
-        watch: {
-            page(value) {
-                console.log('page', value);
-            }
-        },
+//        watch: {
+//            page(value) {
+//                console.log('page', value);
+//            }
+//        },
         created() {
             this.getArticleList();
-            this.getMessageList();
         },
         methods: {
+            getList() {
+                this.messageList = [];
+                this.getArticleList();
+            },
             getArticleList() {
                 let _this = this;
                 let params = {
@@ -243,6 +249,10 @@
                         layer.msg(error.response.data.error || '系统出错', {icon: 5});
                     }
                 });
+            },
+            getMsg() {
+                this.messageList = [];
+                this.getMessageList();
             },
             getMessageList() {
                 let _this = this;
