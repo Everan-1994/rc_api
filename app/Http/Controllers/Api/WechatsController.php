@@ -8,7 +8,9 @@ class WechatsController extends Controller
     {
         $wechat = \EasyWeChat::officialAccount();
 
-        return $wechat->server->serve();
+        $response = $wechat->server->serve();
+        dd($response);
+        return $response;
     }
 
     public function wxConfig()
