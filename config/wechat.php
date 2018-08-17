@@ -62,7 +62,7 @@ return [
             'app_id'  => env('WECHAT_OFFICIAL_ACCOUNT_APPID', 'your-app-id'),         // AppID
             'secret'  => env('WECHAT_OFFICIAL_ACCOUNT_SECRET', 'your-app-secret'),    // AppSecret
             'token'   => env('WECHAT_OFFICIAL_ACCOUNT_TOKEN', 'your-token'),           // Token
-            'aes_key' => env('WECHAT_OFFICIAL_ACCOUNT_AES_KEY', 'rencai'),                 // EncodingAESKey
+            'aes_key' => env('WECHAT_OFFICIAL_ACCOUNT_AES_KEY', 'rencai'),           // EncodingAESKey
 
             /*
              * OAuth 配置
@@ -92,14 +92,14 @@ return [
     /*
      * 小程序
      */
-    'mini_program'     => [
-        'default' => [
-            'app_id' => env('WECHAT_MINI_PROGRAM_APPID', ''),
-            'secret' => env('WECHAT_MINI_PROGRAM_SECRET', ''),
-//            'token'   => env('WECHAT_MINI_PROGRAM_TOKEN', ''),
-//            'aes_key' => env('WECHAT_MINI_PROGRAM_AES_KEY', ''),
-        ],
-    ],
+    // 'mini_program' => [
+    //     'default' => [
+    //         'app_id'  => env('WECHAT_MINI_PROGRAM_APPID', ''),
+    //         'secret'  => env('WECHAT_MINI_PROGRAM_SECRET', ''),
+    //         'token'   => env('WECHAT_MINI_PROGRAM_TOKEN', ''),
+    //         'aes_key' => env('WECHAT_MINI_PROGRAM_AES_KEY', ''),
+    //     ],
+    // ],
 
     /*
      * 微信支付

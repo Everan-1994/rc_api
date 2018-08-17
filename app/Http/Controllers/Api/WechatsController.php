@@ -19,4 +19,5 @@ class WechatsController extends Controller
 
         return $config;
     }
+
 }
