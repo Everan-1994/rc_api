@@ -31,6 +31,9 @@ $api->group([
         // 留言
         $api->post('message', 'MessagesController@store')
             ->name('api.message.store');
+        // 微信配置
+        $api->any('wechat', 'WechatsController@wxConfig')
+            ->name('api.wechat.wxConfig');
 
         // 需要 token 验证的接口
         $api->group(['middleware' => 'refresh.token'], function ($api) {
