@@ -9,7 +9,7 @@ class WechatsController extends Controller
         $wechat = \EasyWeChat::officialAccount();
 
         $response = $wechat->server->serve();
-        dd($response);
+
         return $response;
     }
 
