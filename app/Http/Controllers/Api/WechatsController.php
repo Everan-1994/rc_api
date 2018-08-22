@@ -17,7 +17,7 @@ class WechatsController extends Controller
     {
         $wechat = \EasyWeChat::officialAccount();
 
-        $config = $wechat->jssdk->buildConfig(["onMenuShareTimeline","onMenuShareAppMessage"], true);
+        $config = $wechat->jssdk->buildConfig(["onMenuShareTimeline","onMenuShareAppMessage"], false);
 
         return $config;
     }

@@ -209,4 +209,5 @@ class MessagesController extends Controller
 
         return false;
     }
+
 }

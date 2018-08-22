@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\HouseType;
+use App\Models\HuXing;
 use App\Models\Images;
 use App\Models\Tag;
 use App\Models\Article;
@@ -49,20 +50,20 @@ class ArticlesController extends Controller
         ]);
     }
 
-    public function store(ArticleRequest $articleRequest, Tag $tags, HouseType $houseType)
+    public function store(ArticleRequest $articleRequest, Tag $tags, HouseType $houseType, HuXing $huXing)
     {
         \DB::beginTransaction();
         try {
             $article = $this->article->create([
-                'title'       => $articleRequest->title,
-                'subtitle'    => $articleRequest->subtitle,
-                'phone'       => $articleRequest->phone,
-                'up_body'     => $articleRequest->up_body,
-                'down_body'   => $articleRequest->down_body,
-                'views'       => $articleRequest->views,
-                'asks'        => $articleRequest->asks,
-                'author_id'   => \Auth::id(),
-                'status'      => $articleRequest->status
+                'title'     => $articleRequest->title,
+                'subtitle'  => $articleRequest->subtitle,
+                'phone'     => $articleRequest->phone,
+                'up_body'   => $articleRequest->up_body,
+                'down_body' => $articleRequest->down_body,
+                'views'     => $articleRequest->views,
+                'asks'      => $articleRequest->asks,
+                'author_id' => \Auth::id(),
+                'status'    => $articleRequest->status
             ]);
 
             // 标签
@@ -97,6 +98,12 @@ class ArticlesController extends Controller
                 $this->add_images($articleRequest->images, $article['id']);
             }
 
+            // 户型图片
+            if ($articleRequest->ht) {
+                // 图片本地保存
+                $this->huxing($articleRequest->ht, $article['id']);
+            }
+
             \DB::commit();
         } catch (\Exception $exception) {
             \DB::rollBack();
@@ -106,20 +113,20 @@ class ArticlesController extends Controller
         return new ArticleResource($article);
     }
 
-    public function update(ArticleRequest $articleRequest, Tag $tags, HouseType $houseType)
+    public function update(ArticleRequest $articleRequest, Tag $tags, HouseType $houseType, HuXing $huXing)
     {
         \DB::beginTransaction();
         try {
             $this->article->whereId($articleRequest->id)
                 ->update([
-                    'title'       => $articleRequest->title,
-                    'subtitle'    => $articleRequest->subtitle,
-                    'phone'       => $articleRequest->phone,
-                    'up_body'     => $articleRequest->up_body,
-                    'down_body'   => $articleRequest->down_body,
-                    'views'       => $articleRequest->views,
-                    'asks'        => $articleRequest->asks,
-                    'status'      => $articleRequest->status
+                    'title'     => $articleRequest->title,
+                    'subtitle'  => $articleRequest->subtitle,
+                    'phone'     => $articleRequest->phone,
+                    'up_body'   => $articleRequest->up_body,
+                    'down_body' => $articleRequest->down_body,
+                    'views'     => $articleRequest->views,
+                    'asks'      => $articleRequest->asks,
+                    'status'    => $articleRequest->status
                 ]);
 
             // 先删除原有标签
@@ -156,6 +163,15 @@ class ArticlesController extends Controller
             if ($articleRequest->images) {
                 // 图片本地保存
                 $this->add_images($articleRequest->images, $articleRequest->id);
+            }
+
+            // 先删除原有户型图片
+            $huXing->whereArticleId($articleRequest->id)->delete();
+
+            // 户型图片
+            if ($articleRequest->ht) {
+                // 图片本地保存
+                $this->huxing($articleRequest->ht, $articleRequest->id);
             }
 
             \DB::commit();
@@ -197,6 +213,13 @@ class ArticlesController extends Controller
         return Storage::disk('upyun')->put('/', $request->file('image'));
     }
 
+    public function delImage(Request $request)
+    {
+        Storage::disk('upyun')->delete($request->image);
+
+        return response()->json([], 204);
+    }
+
     // 图片路径保存
     public function add_images($paths, $article_id)
     {
@@ -211,6 +234,22 @@ class ArticlesController extends Controller
         }
 
         return Images::insert($data);
+    }
+
+    // 户型图片路径保存
+    public function huxing($paths, $article_id)
+    {
+        $data = [];
+        foreach ($paths as $k => $val) {
+            $data[$k] = [
+                'article_id' => $article_id,
+                'name'       => $val,
+                'created_at' => now()->toDateTimeString(),
+                'updated_at' => now()->toDateTimeString()
+            ];
+        }
+
+        return HuXing::insert($data);
     }
 
     // 删除又拍云上的图片

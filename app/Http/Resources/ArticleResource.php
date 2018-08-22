@@ -25,6 +25,7 @@ class ArticleResource extends JsonResource
             'true_asks'   => $this->true_asks ?: 0,
             'tags'        => TagResource::collection($this->tags),
             'house_type'  => HouseTypeResource::collection($this->house_type),
+            'hu_xing'     => HuXingResource::collection($this->hu_xing),
             'created_at'  => $this->created_at->toDateTimeString()
         ];
     }

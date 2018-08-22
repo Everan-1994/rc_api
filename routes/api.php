@@ -31,8 +31,12 @@ $api->group([
         // 留言
         $api->post('message', 'MessagesController@store')
             ->name('api.message.store');
+        // 发送短信
+        // $api->get('send/message', 'MessagesController@sendMessage')
+        //    ->name('api.message.sendMessage');
+
         // 微信配置
-        $api->post('wxconfig', 'WechatsController@wxConfig')
+        $api->get('wxconfig', 'WechatsController@wxConfig')
             ->name('api.wechat.wxConfig');
         // 微信服务器认证
         $api->any('wechat', 'WechatsController@serve')
@@ -43,6 +47,9 @@ $api->group([
             // 上传图片
             $api->post('upload/image', 'CommonsController@upload')
                 ->name('api.common.upload');
+            // 删除图片
+            $api->post('del/image', 'ArticlesController@delImage')
+                ->name('api.article.delImage');
             // 用户列表
             $api->get('user', 'UsersController@index')
                 ->name('api.user.index');

@@ -22,4 +22,9 @@ class Article extends Model
     {
         return $this->hasMany(HouseType::class, 'article_id', 'id');
     }
+
+    public function hu_xing()
+    {
+        return $this->hasMany(HuXing::class, 'article_id', 'id');
+    }
 }
