@@ -213,9 +213,11 @@ class ArticlesController extends Controller
         return Storage::disk('upyun')->put('/', $request->file('image'));
     }
 
-    public function delImage(Request $request)
+    public function delImage(Request $request, HuXing $huXing)
     {
         Storage::disk('upyun')->delete($request->image);
+
+        $huXing->whereName($request->image)->delete();
 
         return response()->json([], 204);
     }
