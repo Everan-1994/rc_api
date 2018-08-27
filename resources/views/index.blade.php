@@ -97,9 +97,9 @@
                         </div>
                     </div>
                     <!--right-->
-                    <a href="javascript:;" @click="copy_url(article.id)">
+                    <a href="javascript:;" @click="shareQrcode(article.id)">
                         <div class="novice_zs_f_in_r">
-                            <span style="margin-top: 85%;color: #fff;">复制</span>
+                            <span style="margin-top: 85%;color: #fff;">分享</span>
                         </div>
                     </a>
                 </div>
