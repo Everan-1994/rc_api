@@ -74,7 +74,7 @@
                             setToken('Bearer ' + data.meta.access_token);
                             setUser(data.data.name);
                             setUserId(data.data.id);
-                            setUserPhone(_this.username);
+                            setUserPhone(_this.username.replace(/\s*/g, ''));
                             layer.msg('登陆成功', {icon: 6, time: 1000});
                             setTimeout(() => {
                                 window.location.href = "{{ url('index') }}";
