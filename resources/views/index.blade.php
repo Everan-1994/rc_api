@@ -84,7 +84,8 @@
                             <ul>
                                 <li class="mark1_f"
                                     style="width: 70% !important; margin-left: 10px; border-top: 1px dashed #EEEEEE;">
-                                    <div style="font-size: 12px; padding: 10px 10px 0 10px;" v-html="article.title"></div>
+                                    <div style="font-size: 12px; padding: 10px 10px 0 10px;"
+                                         v-html="article.title"></div>
                                 </li>
                                 <li class="mark3_f"
                                     style="width: 20% !important; font-size: 12px; padding: 7% 0 0 10px; border-top: 1px dashed #EEEEEE; ">
@@ -96,9 +97,9 @@
                         </div>
                     </div>
                     <!--right-->
-                    <a href="javascript:;" @click="shareQrcode(article.id)">
+                    <a href="javascript:;" @click="copy_url(article.id)">
                         <div class="novice_zs_f_in_r">
-                            <span style="margin-top: 85%;color: #fff;">分享</span>
+                            <span style="margin-top: 85%;color: #fff;">复制</span>
                         </div>
                     </a>
                 </div>
@@ -128,7 +129,7 @@
                                 </li>
                                 <li class="mark2_f">
                                     <em>联系方式</em>
-                                    <p style="text-align: center;" >
+                                    <p style="text-align: center;">
                                         <a :href="message.tphone" v-text="message.phone"></a>
                                     </p>
                                 </li>
@@ -136,14 +137,14 @@
                                     <em @click="dmessage(message.home_type)" v-text="message.ltime"></em>
                                     <p class="titles" style="text-align: center;" v-text="message.home_type"></p>
                                     {{--<p class="titles" style="text-align: center;" v-if="message.remake"--}}
-                                       {{--v-text="message.remake"></p>--}}
+                                    {{--v-text="message.remake"></p>--}}
                                     {{--<p style="text-align: center;" v-else> -- </p>--}}
                                 </li>
                                 {{--<li class="mark3_f" style="color: #009f95;">--}}
-                                    {{--<em v-text="message.ltime"></em>--}}
-                                    {{--<p class="titles" style="text-align: center;" v-text="message.htime"--}}
-                                       {{--v-if="message.status == 1"></p>--}}
-                                    {{--<p class="titles" style="text-align: center;" v-else> -- </p>--}}
+                                {{--<em v-text="message.ltime"></em>--}}
+                                {{--<p class="titles" style="text-align: center;" v-text="message.htime"--}}
+                                {{--v-if="message.status == 1"></p>--}}
+                                {{--<p class="titles" style="text-align: center;" v-else> -- </p>--}}
                                 {{--</li>--}}
                             </ul>
                         </div>
@@ -332,6 +333,17 @@
                     layer.msg('已经是第一页了。');
                 }
             },
+            copy_url(id) {
+                let url = `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}`;
+                var oInput = document.createElement('input');
+                oInput.value = url;
+                document.body.appendChild(oInput);
+                oInput.select(); // 选择对象
+                document.execCommand("Copy"); // 执行浏览器复制命令
+                oInput.className = 'oInput';
+                oInput.style.display = 'none';
+                layer.msg('复制链接成功');
+            },
             shareQrcode(id) {
                 const _this = this;
                 _this.qrcodes = true;
@@ -397,8 +409,8 @@
                 layer.msg(`${htime}回复：${remake}`);
             },
             edit_pwd() {
-                const  _this = this;
-                layer.prompt({title: '请输入新密码', formType: 0}, function(pass, index){
+                const _this = this;
+                layer.prompt({title: '请输入新密码', formType: 0}, function (pass, index) {
                     layer.close(index);
                     _this.edit_pwd_do(pass);
                 });
@@ -420,8 +432,8 @@
                 const _this = this;
                 layer.confirm('确定退出系统吗？', {
                     title: '温馨提示',
-                    btn: ['确定','取消']
-                }, function(){
+                    btn: ['确定', '取消']
+                }, function () {
                     _this.logout();
                 });
             },

@@ -9,14 +9,14 @@ class AuthorizationsController extends Controller
 {
     public function login(Request $request)
     {
-
-        $username = $request->username;
+        // preg_replace 去除特定字符串
+        $username = preg_replace('/\s+/', '', $request->username);
 
         filter_var($username, FILTER_VALIDATE_EMAIL) ?
             $credentials['email'] = $username :
             $credentials['phone'] = $username;
 
-        $credentials['password'] = $request->password;
+        $credentials['password'] = preg_replace('/\s+/', '', $request->password);
 
         if (!$token = \Auth::guard('api')->attempt($credentials)) {
             return response(['error' => '账号或密码错误'], 400);
