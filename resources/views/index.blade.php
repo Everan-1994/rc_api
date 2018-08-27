@@ -334,6 +334,10 @@
                 }
             },
             copy_url(id) {
+                let share_id = getUserId();
+                let phone = getUserPhone();
+                let names = getUser();
+                let share_name = `${names.substring(0, 1)}经理`;
                 let url = `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}`;
                 var oInput = document.createElement('input');
                 oInput.value = url;
