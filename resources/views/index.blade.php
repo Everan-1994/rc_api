@@ -294,7 +294,7 @@
                 });
             },
             more_next() {
-                if (this.articleList.length > (this.pageSize * this.page)) {
+                if (this.total > (this.pageSize * this.page)) {
                     this.$refs.more_prev.disabled = false;
                     this.page++;
                     this.getArticleList();
@@ -314,7 +314,7 @@
                 }
             },
             more_mnext() {
-                if (this.messageList.length > (this.m_pageSize * this.m_page)) {
+                if (this.m_total > (this.m_pageSize * this.m_page)) {
                     this.$refs.more_mprev.disabled = false;
                     this.m_page++;
                     this.getMessageList();
