@@ -225,9 +225,9 @@
                     _this.articleList = response.data.data;
                     _this.total = response.data.meta.total;
                     if (_this.total <= _this.pageSize) {
-                        _this.showPage = true;
-                    } else {
                         _this.showPage = false;
+                    } else {
+                        _this.showPage = true;
                     }
                     _this.articleList.forEach((v, i) => {
                         _this.articleList[i].time = moment(v.created_at, format = 'YYYYMMDD H:mm:ss').fromNow();
@@ -265,9 +265,9 @@
                     _this.messageList = response.data.data;
                     _this.m_total = response.data.meta.total;
                     if (_this.m_total <= _this.m_pageSize) {
-                        _this.showMPage = true;
-                    } else {
                         _this.showMPage = false;
+                    } else {
+                        _this.showMPage = true;
                     }
                     _this.messageList.forEach((v, i) => {
                         _this.messageList[i].ltime = moment(v.created_at, format = 'YYYYMMDD H:mm:ss').fromNow() + '的留言';
