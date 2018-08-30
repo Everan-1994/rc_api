@@ -77,7 +77,7 @@
                         <!--top-->
                         <div class="novice_zs_f_in_l_top" style="margin-bottom: 10px;">
                             <img src="home/title.png"/>
-                            <span class="titles" v-text="article.title" @click="read(article.id)"></span>
+                            <span class="titles" v-text="article.title"></span>
                         </div>
                         <!--bottom-->
                         <div class="novice_zs_f_in_l_bottom">
@@ -97,9 +97,9 @@
                         </div>
                     </div>
                     <!--right-->
-                    <a href="javascript:;" @click="shareQrcode(article.id)">
+                    <a href="javascript:;" @click="detail(article.id)">
                         <div class="novice_zs_f_in_r">
-                            <span style="margin-top: 85%;color: #fff;">分享</span>
+                            <span style="margin-top: 85%;color: #fff;">预览</span>
                         </div>
                     </a>
                 </div>
@@ -294,7 +294,7 @@
                 });
             },
             more_next() {
-                if (this.articleList.length == this.pageSize) {
+                if (this.articleList.length > (this.pageSize * this.page)) {
                     this.$refs.more_prev.disabled = false;
                     this.page++;
                     this.getArticleList();
@@ -314,7 +314,7 @@
                 }
             },
             more_mnext() {
-                if (this.messageList.length == this.m_pageSize) {
+                if (this.messageList.length > (this.m_pageSize * this.m_page)) {
                     this.$refs.more_mprev.disabled = false;
                     this.m_page++;
                     this.getMessageList();
@@ -347,6 +347,15 @@
                 oInput.className = 'oInput';
                 oInput.style.display = 'none';
                 layer.msg('复制链接成功');
+            },
+            detail(id) {
+                let share_id = getUserId();
+                let phone = getUserPhone();
+                let names = getUser();
+                let share_name = `${names.substring(0, 1)}经理`;
+                let url = `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}`;
+
+                window.location.href = url;
             },
             shareQrcode(id) {
                 const _this = this;
