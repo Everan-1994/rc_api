@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
+
 class WechatsController extends Controller
 {
     public function serve()
@@ -13,9 +15,11 @@ class WechatsController extends Controller
         return $response;
     }
 
-    public function wxConfig()
+    public function wxConfig(Request $request)
     {
         $wechat = \EasyWeChat::officialAccount();
+
+        $wechat->jssdk->setUrl(urlencode($request->url));
 
         $config = $wechat->jssdk->buildConfig(["onMenuShareTimeline","onMenuShareAppMessage"], false);
 
