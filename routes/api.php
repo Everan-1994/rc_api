@@ -42,8 +42,8 @@ $api->group([
         $api->any('wechat', 'WechatsController@serve')
             ->name('api.wechat.serve');
         // 创建微信菜单
-        $api->post('menu', 'WechatsController@createMenu')
-            ->name('api.wechat.createMenu');
+        // $api->post('menu', 'WechatsController@createMenu')
+        //    ->name('api.wechat.createMenu');
 
         // 需要 token 验证的接口
         $api->group(['middleware' => 'refresh.token'], function ($api) {
