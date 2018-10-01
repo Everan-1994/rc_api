@@ -77,7 +77,7 @@
                         <!--top-->
                         <div class="novice_zs_f_in_l_top" style="margin-bottom: 10px;">
                             <img src="home/title.png"/>
-                            <span class="titles" v-text="article.title"></span>
+                            <span class="titles" v-text="article.title" @click="shareQrcode(article.id)"></span>
                         </div>
                         <!--bottom-->
                         <div class="novice_zs_f_in_l_bottom">
@@ -338,7 +338,7 @@
                 let phone = getUserPhone();
                 let names = getUser();
                 let share_name = `${names.substring(0, 1)}经理`;
-                let url = `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}`;
+                let url = `https://rc.lzdu.com/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}`;
                 var oInput = document.createElement('input');
                 oInput.value = url;
                 document.body.appendChild(oInput);
@@ -353,7 +353,7 @@
                 let phone = getUserPhone();
                 let names = getUser();
                 let share_name = `${names.substring(0, 1)}经理`;
-                let url = `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}`;
+                let url = `https://rc.lzdu.com/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}`;
 
                 window.location.href = url;
             },
@@ -364,7 +364,7 @@
                 let phone = getUserPhone();
                 let names = getUser();
                 let share_name = `${names.substring(0, 1)}经理`;
-                let urls = _this.utf16to8(`https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}`);
+                let urls = _this.utf16to8(`https://rc.lzdu.com/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}`);
 
                 $('#qrcode').qrcode({
                     width: 170,
@@ -394,7 +394,7 @@
                     shadeClose: true,
                     shade: 0.8,
                     area: ['100%', '100%'],
-                    content: `https://rc.lzdu.com/#/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}` //iframe的url
+                    content: `https://rc.lzdu.com/preview?id=${id}&share_id=${share_id}&phone=${phone}&share_name=${share_name}` //iframe的url
                 });
 
                 layer.full(detail);
