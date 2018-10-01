@@ -39,7 +39,7 @@ $api->group([
         $api->get('wxconfig', 'WechatsController@wxConfig')
             ->name('api.wechat.wxConfig');
         // 微信服务器认证
-        $api->any('wechat1', 'WechatsController@serve')
+        $api->any('wechat', 'WechatsController@serve')
             ->name('api.wechat.serve');
 
         // 需要 token 验证的接口
