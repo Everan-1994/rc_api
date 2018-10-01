@@ -21,7 +21,7 @@ class WechatsController extends Controller
 
         $wechat->jssdk->setUrl($request->url);
 
-        $config = $wechat->jssdk->buildConfig(["onMenuShareAppMessage","onMenuShareTimeline"], false);
+        $config = $wechat->jssdk->buildConfig(["updateAppMessageShareData","updateTimelineShareData"], false);
 
         return $config;
     }
