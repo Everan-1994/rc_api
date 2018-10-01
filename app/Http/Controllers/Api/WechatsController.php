@@ -26,4 +26,19 @@ class WechatsController extends Controller
         return $config;
     }
 
+    public function createMenu()
+    {
+        $wechat = \EasyWeChat::officialAccount();
+
+        $buttons = [
+            [
+                "url" => "https://rc-api.lzdu.com/wap",
+                "name" => "仁才后台",
+                "type" => 'view'
+            ]
+        ];
+
+        return $wechat->menu->create($buttons);
+    }
+
 }
