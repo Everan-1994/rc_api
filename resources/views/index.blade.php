@@ -77,7 +77,7 @@
                         <!--top-->
                         <div class="novice_zs_f_in_l_top" style="margin-bottom: 10px;">
                             <img src="home/title.png"/>
-                            <span class="titles" v-text="article.title" @click="shareQrcode(article.id)"></span>
+                            <span class="titles" v-html="article.title" @click="shareQrcode(article.id)"></span>
                         </div>
                         <!--bottom-->
                         <div class="novice_zs_f_in_l_bottom">
